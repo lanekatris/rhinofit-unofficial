@@ -1,0 +1,19 @@
+{
+  "name": "@lkat/rhinofit-unofficial",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Lane Katris <lanekatris@gmail.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/client.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
