@@ -106,3 +106,5 @@ dist
 packages/*/lib
 
 scratch.ts
+
+.idea/

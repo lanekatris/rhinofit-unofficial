@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "publish": "lerna run tsc && lerna publish"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
