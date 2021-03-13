@@ -1,6 +1,6 @@
 import moment from 'moment';
 import rp from 'request-promise';
-import { AuthenticationService, formatCookies } from './AuthenticationService';
+import { Credentials, formatCookies } from './AuthenticationService';
 
 export interface RegisterForThisWeekResponse {
   error?: string;
@@ -21,8 +21,9 @@ export enum Days {
 
 export interface RegisterForThisWeekRequest {
   // Who we want to register as
-  email: string;
-  password: string;
+  // email: string;
+  // password: string;
+  credentials: Credentials
 
   // What time of day do we want to schedule for?
   hourOfDay: HourOfDayRange;
@@ -31,10 +32,18 @@ export interface RegisterForThisWeekRequest {
   days: Days[];
 }
 
+export type TimeSlotIds = Record<HourOfDayRange, string>;
+export interface GymScheduleServiceParams {
+  gymId: string
+  timeSlotIds: TimeSlotIds
+}
+
 export class GymScheduleService {
-  constructor(private service: AuthenticationService) {}
+  // constructor(private service: AuthenticationService) {}
+  constructor(private params: GymScheduleServiceParams) {}
 
   private getReservationId(hourOfDay: HourOfDayRange, day: Days): string {
+    const {timeSlotIds} = this.params;
     // 4 - 6 Monday:    125396-0
     // 6 - 8 Monday:    125397-0
     // 6 - 8 Tuesday:   125397-1
@@ -42,11 +51,11 @@ export class GymScheduleService {
     // 8 - 10 Monday:  125398-0
     // 8 - 10 Tuesday: 125398-1
 
-    const idMap = {
-      16: '125396',
-      18: '125397',
-      20: '125398'
-    };
+    // const idMap = {
+    //   16: '125396',
+    //   18: '125397',
+    //   20: '125398'
+    // };
 
     const dayMap = {
       [Days.Monday]: 0,
@@ -56,14 +65,14 @@ export class GymScheduleService {
       [Days.Friday]: 4
     };
 
-    return `${idMap[hourOfDay]}-${dayMap[day]}`;
+    return `${timeSlotIds[hourOfDay]}-${dayMap[day]}`;
   }
 
   public async registerForThisWeek(
     request: RegisterForThisWeekRequest
   ): Promise<RegisterForThisWeekResponse[]> {
-    const { email, password, hourOfDay, days } = request;
-    const cookies = await this.service.login({ email, password });
+    const {gymId} = this.params;
+    const { credentials, hourOfDay, days } = request;
 
     const dates = days.map(dayEnum => ({
       day: dayEnum,
@@ -84,7 +93,7 @@ export class GymScheduleService {
         url: 'https://my.rhinofit.ca/forms/memberutils',
         method: 'POST',
         headers: {
-          Cookie: formatCookies(cookies)
+          Cookie: formatCookies(credentials.cookies)
         },
         form: {
           action: 'reservestudentclass',
@@ -92,7 +101,7 @@ export class GymScheduleService {
           start: fullDate.format(
             `ddd MMM DD YYYY ${hourOfDay}:00:00 G\\MT 0000`
           ),
-          hash: 'a1c0a008', // TODO: This needs to be shared
+          hash: gymId,
           date: moment().valueOf()
         }
       };
