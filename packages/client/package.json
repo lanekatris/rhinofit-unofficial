@@ -20,6 +20,9 @@
   "scripts": {
     "tsc": "tsc"
   },
+  "repository": {
+    "url": "git@github.com:lanekatris/rhinofit-unofficial.git"
+  },
   "dependencies": {
     "moment": "^2.29.1",
     "request": "^2.88.2",
