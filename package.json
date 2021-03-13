@@ -9,6 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "url": "git@github.com:lanekatris/rhinofit-unofficial.git"
+  },
   "devDependencies": {
     "@types/node": "^14.14.34",
     "lerna": "^3.22.1",
