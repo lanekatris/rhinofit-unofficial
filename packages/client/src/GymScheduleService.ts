@@ -2,9 +2,9 @@ import moment from 'moment';
 import rp from 'request-promise';
 import { Credentials, formatCookies } from './AuthenticationService';
 
-export interface RegisterForThisWeekResponse {
-  error?: string;
-}
+// export interface RegisterForThisWeekResponse {
+//   error?: string;
+// }
 
 export type HourOfDayRange = 16 | 18 | 20;
 
@@ -70,7 +70,7 @@ export class GymScheduleService {
 
   public async registerForThisWeek(
     request: RegisterForThisWeekRequest
-  ): Promise<RegisterForThisWeekResponse[]> {
+  ): Promise<any> {
     const {gymId} = this.params;
     const { credentials, hourOfDay, days } = request;
 
