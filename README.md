@@ -45,9 +45,14 @@ const response = await scheduleService.registerForThisWeek({
 ```
 
 # How to find your gym ID?
+![find gym id](https://user-images.githubusercontent.com/3193546/111081676-dec32500-84da-11eb-94f8-11264485d4aa.gif)
+
 
 
 # How to find your time slot IDs?
+In the same payload as the GIF above; every timeslot you choose you will see a different `ct_id`. This is what you want (without the dash and after that).
+
+![Screenshot from 2021-03-14 15-32-47](https://user-images.githubusercontent.com/3193546/111081656-b76c5800-84da-11eb-980e-f8c34bd56efd.png)
 
  
 # References
