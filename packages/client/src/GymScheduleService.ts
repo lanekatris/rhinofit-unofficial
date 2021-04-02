@@ -84,7 +84,7 @@ export class GymScheduleService {
     for (const date of dates) {
       const { day, fullDate } = date;
 
-      if (fullDate.isBefore(moment())) {
+      if (fullDate.isBefore(moment(), "day")) {
         console.log('not creating date because it is before today');
         continue;
       }
